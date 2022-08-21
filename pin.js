@@ -1,73 +1,76 @@
-//function to generate random numbers-
-function getPin(){
-  const roundNum = Math.round(Math.random()* 10000);
-  const getStringNum = roundNum + '';
-  const getStringLength = getStringNum.length;
+//function for Generate random number-
+function getRandomCode(){
+  const randomNumbers = Math.round(Math.random() * 10000);
+  const toString = randomNumbers + '';
   
-  if(getStringLength === 4){
-    return getStringNum;
+  //condition for string length-
+  if(toString.length >= 4){
+    const inputValue = document.getElementById('input-value');
+    inputValue.value = toString;
   }
   else{
-    return getPin();
+    return getRandomCode();
   }
 }
 
+//Generate button click-handeler-
+document.getElementById('generate-button').addEventListener('click',function(){
+  //call the function to get random number-
+  getRandomCode()
 
-//Generate code button-
-document.getElementById('generate-button').addEventListener('click', function(){
-  //call the function to getPin-
-  const randomNum = getPin();
-  
-  //set the numbers to the value-
-  const input = document.getElementById('input-value');
-  input.value = randomNum;
 })
 
 
-//calculator buttons-
+//calculator button's click handeler-
 document.getElementById('calculator').addEventListener('click', function(event){
-  const numbers = event.target.innerText;
+  const clickValue = event.target.innerText;
+  const inputValues = document.getElementById('input-value-calculator');
+  const inputValueText = inputValues.value;
   
-  //diclare the calculator input value-
-  const inputValue = document.getElementById('input-value-calculator');
-  const inputValueText = inputValue.value;
-
-  //condition-
-  if(isNaN(numbers)){
-    if(numbers === 'C'){
-      inputValue.value = '';
+  if(isNaN(clickValue)){
+    if(clickValue === 'C'){
+      inputValues.value = '';
     }
-    else if(numbers === '<'){
-      let splitValue = inputValueText.split('');
-      splitValue.pop();
-      let joinValue = splitValue.join('');
-      
-      inputValue.value = joinValue;
+    else if(clickValue === '<'){
+      const valueSplit = inputValueText.split('');
+      valueSplit.pop();
+      valueJoin = valueSplit.join('');
+      inputValues.value = valueJoin;
     }
   }
   else{
-    //get the input string value and plus the value-
-    let sumString = inputValueText + numbers;
-    inputValue.value = sumString;
+    console.log('number')
+    //add numbers-
+    let plusValue = inputValueText + clickValue;
+    inputValues.value = plusValue;
   }
 })
 
 
 
-//submit button-
+//submit button click handeler-
 document.getElementById('submit-button').addEventListener('click', function(){
-  const codeGenerateInput = document.getElementById('input-value').value;
-  const calculatorInput = document.getElementById('input-value-calculator').value;
+  //input value diclaration-
+  const generateCodeInput =document.getElementById('input-value');
+  const generateCodeInputValue = generateCodeInput.value;
+  const calculatorInput =document.getElementById('input-value-calculator');
+  const calculatorInputValue = calculatorInput.value;
+
+  //error massage diclaration-
+  const matchedCode = document.getElementById('pin-matched');
+  const notMatchCode = document.getElementById('pin-not-matched');
+
 
   //condition-
-  if(calculatorInput === ''){
-    alert('please type the code');
+  if(calculatorInputValue === ''){
+    alert('Please type the code');
   }
-  else if(codeGenerateInput === calculatorInput){
-
-    console.log('code matched');
+  else if(generateCodeInputValue === calculatorInputValue){
+    notMatchCode.style.display = 'none';
+    matchedCode.style.display = 'block';
   }
   else{
-    console.log('code not matched')
+    notMatchCode.style.display = 'block';
+    matchedCode.style.display = 'none';
   }
 })
